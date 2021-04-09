@@ -12,9 +12,11 @@
     />
   </section>
   <h2>{{ status }}</h2>
+  <button @click="shuffleCards">Shuffle Cards</button>
 </template>
 
 <script>
+import _ from 'lodash';
 import { computed, ref, watch } from 'vue';
 import Card from './components/Card';
 
@@ -26,6 +28,7 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
+
     const status = computed(() => {
       if (remainingPairs.value === 0) {
         return 'Player wins!';
@@ -33,6 +36,7 @@ export default {
         return `Remaining Pairs: ${remainingPairs.value}`;
       }
     });
+
     const remainingPairs = computed(() => {
       const remainingCards = cardList.value.filter(
         (card) => card.matched === false
@@ -41,9 +45,13 @@ export default {
       return remainingCards / 2;
     });
 
+    const shuffleCards = () => {
+      cardList.value = _.shuffle(cardList.value);
+    };
+
     for (let i = 0; i < 16; i++) {
       cardList.value.push({
-        value: 8,
+        value: i,
         visible: false,
         position: i,
         matched: false,
@@ -86,6 +94,7 @@ export default {
       cardList,
       flipCard,
       status,
+      shuffleCards,
     };
   },
 };
