@@ -92,8 +92,9 @@ export default {
       cardList.value[payload.position].visible = true;
       if (userSelection.value[0]) {
         if (
-          userSelection.value[0].position === payload.position &&
-          userSelection.value[0].faceValue === payload.faceValue
+          cardList.value[payload.position].matched ||
+          (userSelection.value[0].position === payload.position &&
+            userSelection.value[0].faceValue === payload.faceValue)
         ) {
           return;
         } else {
