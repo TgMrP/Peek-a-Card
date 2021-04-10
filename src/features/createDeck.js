@@ -33,7 +33,7 @@ const updateCardPosition = () => {
   });
 };
 
-export function createDeck(deckData) {
+export default function createDeck(deckData) {
   initDeck(deckData);
   updateCardPosition();
   return {

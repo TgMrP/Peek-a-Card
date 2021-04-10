@@ -1,9 +1,9 @@
 import confetti from 'canvas-confetti';
 
-export const lunchConfetti = () => {
+export const launchConfetti = () => {
   const end = Date.now() + 10 * 1000;
 
-  const colors = ['#34495e', '#41b883'];
+  const colors = ['#34495E', '#41B883'];
 
   (function frame() {
     confetti({

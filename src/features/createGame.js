@@ -1,11 +1,12 @@
 import _ from 'lodash';
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 
-export function createGame(deck) {
+export default function createGame(deck) {
   const newPlayer = ref(true);
 
   const startGame = () => {
     newPlayer.value = false;
+
     restartGame();
   };
 
@@ -16,25 +17,18 @@ export function createGame(deck) {
       return {
         ...card,
         matched: false,
-        visible: false,
         position: index,
+        visible: false,
       };
     });
   };
 
   const status = computed(() => {
-    if (remainingPairs.value === 0) {
+    if (matchesFound.value === 8) {
       return 'Player wins!';
     } else {
-      return `Remaining Pairs: ${remainingPairs.value}`;
+      return `Matches found: ${matchesFound.value}`;
     }
-  });
-
-  const remainingPairs = computed(() => {
-    const remainingCards = deck.value.filter((card) => card.matched === false)
-      .length;
-
-    return remainingCards / 2;
   });
 
   const matchesFound = computed(() => {
@@ -45,11 +39,10 @@ export function createGame(deck) {
   });
 
   return {
-    newPlayer,
-    startGame,
-    restartGame,
-    status,
-    remainingPairs,
     matchesFound,
+    newPlayer,
+    restartGame,
+    startGame,
+    status,
   };
 }
