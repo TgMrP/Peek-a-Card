@@ -1,33 +1,3 @@
-<template>
-  <h1>Peek-a-Card</h1>
-  <section class="description">
-    <p>Welcome to Peek-a-Card</p>
-    <p>A card matching game powered by Vue.js 3 !</p>
-  </section>
-  <transition-group tag="section" name="shuffle-card" class="game-board">
-    <Card
-      v-for="card in cardList"
-      :value="card.value"
-      :visible="card.visible"
-      :position="card.position"
-      :matched="card.matched"
-      :image="card.image"
-      :key="`card-${card.value}-${card.variant}`"
-      @select-card="flipCard"
-    />
-  </transition-group>
-  <h2 class="status">{{ status }}</h2>
-  <button v-if="newPlayer" @click="startGame" class="button">
-    <img src="@/assets/images/Halloween/play.svg" alt="Start Icon" />
-    Start Game
-  </button>
-  <button v-else @click="restartGame" class="button">
-    <img src="@/assets/images/Halloween/restart.svg" alt="Restart Icon" />
-    Restart Game
-  </button>
-  <!-- <button @click="shuffleCards">Shuffle Cards</button> -->
-</template>
-
 <script>
 import _ from 'lodash';
 import { computed, ref, watch } from 'vue';
@@ -174,6 +144,36 @@ export default {
   },
 };
 </script>
+
+<template>
+  <h1>Peek-a-Card</h1>
+  <section class="description">
+    <p>Welcome to Peek-a-Card</p>
+    <p>A card matching game powered by Vue.js 3 !</p>
+  </section>
+  <transition-group tag="section" name="shuffle-card" class="game-board">
+    <Card
+      v-for="card in cardList"
+      :value="card.value"
+      :visible="card.visible"
+      :position="card.position"
+      :matched="card.matched"
+      :image="card.image"
+      :key="`card-${card.value}-${card.variant}`"
+      @select-card="flipCard"
+    />
+  </transition-group>
+  <h2 class="status">{{ status }}</h2>
+  <button v-if="newPlayer" @click="startGame" class="button">
+    <img src="@/assets/images/Halloween/play.svg" alt="Start Icon" />
+    Start Game
+  </button>
+  <button v-else @click="restartGame" class="button">
+    <img src="@/assets/images/Halloween/restart.svg" alt="Restart Icon" />
+    Restart Game
+  </button>
+  <!-- <button @click="shuffleCards">Shuffle Cards</button> -->
+</template>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap');
