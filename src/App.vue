@@ -7,12 +7,16 @@
       :visible="card.visible"
       :position="card.position"
       :matched="card.matched"
+      :image="card.image"
       :key="`card-${index}`"
       @select-card="flipCard"
     />
   </section>
   <h2>{{ status }}</h2>
-  <button @click="restartGame">Restart Game</button>
+  <button @click="restartGame" class="button">
+    <img src="@/assets/images/Halloween/restart.svg" alt="Restart Icon" />
+    Restart Game
+  </button>
   <!-- <button @click="shuffleCards">Shuffle Cards</button> -->
 </template>
 
@@ -63,7 +67,16 @@ export default {
       });
     };
 
-    const cardItems = [1, 2, 3, 4, 5, 6, 7, 8];
+    const cardItems = [
+      'bat',
+      'candy',
+      'cauldron',
+      'cupcake',
+      'ghost',
+      'moon',
+      'pumpkin',
+      'witch-hat',
+    ];
 
     cardItems.forEach((item) => {
       cardList.value.push({
@@ -71,6 +84,7 @@ export default {
         visible: false,
         position: null,
         matched: false,
+        image: require(`@/assets/images/Halloween/${item}.png`),
       });
 
       cardList.value.push({
@@ -78,6 +92,7 @@ export default {
         visible: false,
         position: null,
         matched: false,
+        image: require(`@/assets/images/Halloween/${item}.png`),
       });
     });
 
@@ -140,21 +155,49 @@ export default {
 </script>
 
 <style>
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin-top: 0;
+  padding-top: 4px;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #fff;
+  background-image: url('~@/assets/images/Halloween/page-bg.png');
+  background-color: #00070c;
+  height: 100vh;
 }
 
 .game-board {
   display: grid;
-  grid-template-columns: 100px 100px 100px 100px;
-  grid-template-rows: 100px 100px 100px 100px;
-  grid-column-gap: 30px;
-  grid-row-gap: 30px;
+  grid-template-columns: repeat(4, 120px);
+  grid-template-rows: repeat(4, 120px);
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
   justify-content: center;
+}
+
+.button {
+  background-color: orange;
+  color: white;
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.button img {
+  padding-right: 5px;
 }
 </style>

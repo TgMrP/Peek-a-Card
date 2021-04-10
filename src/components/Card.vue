@@ -1,11 +1,14 @@
 <template>
   <div class="card" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
-      {{ value }} - {{ matched }}
+      <img :src="image" :alt="value" />
+      <img
+        v-if="matched"
+        src="@/assets/images/Halloween/checkmark.svg"
+        class="icon-checkmark"
+      />
     </div>
-    <div v-else class="card-face is-back">
-      Back
-    </div>
+    <div v-else class="card-face is-back"></div>
   </div>
 </template>
 
@@ -21,7 +24,11 @@ export default {
       required: true,
     },
     value: {
-      type: Number,
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
       required: true,
     },
     visible: {
@@ -46,7 +53,6 @@ export default {
 
 <style scoped>
 .card {
-  border: 5px solid #ccc;
   position: relative;
 }
 
@@ -54,15 +60,25 @@ export default {
   width: 100%;
   height: 100%;
   position: absolute;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-face.is-front {
-  background-color: red;
+  background-image: url('~@/assets/images/Halloween/card-bg.png');
   color: white;
 }
 
 .card-face.is-back {
-  background-color: blue;
+  background-image: url('~@/assets/images/Halloween/card-bg-empty.png');
   color: white;
+}
+
+.icon-checkmark {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
 }
 </style>
