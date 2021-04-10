@@ -1,6 +1,7 @@
 <script>
 import _ from 'lodash';
 import { computed, ref, watch } from 'vue';
+import { createDeck } from './features/createDeck.js';
 import { lunchConfetti } from './utilities/confetti';
 import Card from './components/Card';
 
@@ -10,7 +11,8 @@ export default {
     Card,
   },
   setup() {
-    const cardList = ref([]);
+    const { cardList } = createDeck();
+
     const userSelection = ref([]);
     const newPlayer = ref(true);
 
@@ -48,44 +50,6 @@ export default {
         };
       });
     };
-
-    const cardItems = [
-      'bat',
-      'candy',
-      'cauldron',
-      'cupcake',
-      'ghost',
-      'moon',
-      'pumpkin',
-      'witch-hat',
-    ];
-
-    cardItems.forEach((item) => {
-      cardList.value.push({
-        value: item,
-        variant: 1,
-        visible: false,
-        position: null,
-        matched: false,
-        image: require(`@/assets/images/Halloween/${item}.png`),
-      });
-
-      cardList.value.push({
-        value: item,
-        variant: 2,
-        visible: true,
-        position: null,
-        matched: false,
-        image: require(`@/assets/images/Halloween/${item}.png`),
-      });
-    });
-
-    cardList.value = cardList.value.map((card, index) => {
-      return {
-        ...card,
-        position: index,
-      };
-    });
 
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true;
