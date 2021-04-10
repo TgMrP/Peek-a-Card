@@ -1,17 +1,17 @@
 <template>
   <h1>Peek-a-Card</h1>
-  <section class="game-board">
+  <transition-group tag="section" name="shuffle-card" class="game-board">
     <Card
-      v-for="(card, index) in cardList"
+      v-for="card in cardList"
       :value="card.value"
       :visible="card.visible"
       :position="card.position"
       :matched="card.matched"
       :image="card.image"
-      :key="`card-${index}`"
+      :key="`card-${card.value}-${card.variant}`"
       @select-card="flipCard"
     />
-  </section>
+  </transition-group>
   <h2>{{ status }}</h2>
   <button @click="restartGame" class="button">
     <img src="@/assets/images/Halloween/restart.svg" alt="Restart Icon" />
@@ -50,12 +50,8 @@ export default {
       return remainingCards / 2;
     });
 
-    const shuffleCards = () => {
-      cardList.value = _.shuffle(cardList.value);
-    };
-
     const restartGame = () => {
-      shuffleCards();
+      cardList.value = _.shuffle(cardList.value);
 
       cardList.value = cardList.value.map((card, index) => {
         return {
@@ -81,6 +77,7 @@ export default {
     cardItems.forEach((item) => {
       cardList.value.push({
         value: item,
+        variant: 1,
         visible: false,
         position: null,
         matched: false,
@@ -89,6 +86,7 @@ export default {
 
       cardList.value.push({
         value: item,
+        variant: 2,
         visible: false,
         position: null,
         matched: false,
@@ -147,7 +145,6 @@ export default {
       cardList,
       flipCard,
       status,
-      shuffleCards,
       restartGame,
     };
   },
@@ -184,6 +181,10 @@ h1 {
   grid-column-gap: 24px;
   grid-row-gap: 24px;
   justify-content: center;
+}
+
+.shuffle-card-move {
+  transition: transform 0.8 ease-in;
 }
 
 .button {
