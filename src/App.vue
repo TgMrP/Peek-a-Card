@@ -1,5 +1,9 @@
 <template>
   <h1>Peek-a-Card</h1>
+  <section class="description">
+    <p>Welcome to Peek-a-Card</p>
+    <p>A card matching game powered by Vue.js 3 !</p>
+  </section>
   <transition-group tag="section" name="shuffle-card" class="game-board">
     <Card
       v-for="card in cardList"
@@ -12,8 +16,12 @@
       @select-card="flipCard"
     />
   </transition-group>
-  <h2>{{ status }}</h2>
-  <button @click="restartGame" class="button">
+  <h2 class="status">{{ status }}</h2>
+  <button v-if="newPlayer" @click="startGame" class="button">
+    <img src="@/assets/images/Halloween/play.svg" alt="Start Icon" />
+    Start Game
+  </button>
+  <button v-else @click="restartGame" class="button">
     <img src="@/assets/images/Halloween/restart.svg" alt="Restart Icon" />
     Restart Game
   </button>
@@ -34,6 +42,13 @@ export default {
   setup() {
     const cardList = ref([]);
     const userSelection = ref([]);
+    const newPlayer = ref(true);
+
+    const startGame = () => {
+      newPlayer.value = false;
+
+      restartGame();
+    };
 
     const status = computed(() => {
       if (remainingPairs.value === 0) {
@@ -88,7 +103,7 @@ export default {
       cardList.value.push({
         value: item,
         variant: 2,
-        visible: false,
+        visible: true,
         position: null,
         matched: false,
         image: require(`@/assets/images/Halloween/${item}.png`),
@@ -153,12 +168,16 @@ export default {
       flipCard,
       status,
       restartGame,
+      startGame,
+      newPlayer,
     };
   },
 };
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@600&display=swap');
+
 html,
 body {
   margin: 0;
@@ -194,18 +213,38 @@ h1 {
   transition: transform 0.8 ease-in;
 }
 
+.status {
+  font-family: 'Titillium Web', sans-serif;
+}
+
 .button {
   background-color: orange;
   color: white;
-  padding: 0.75rem 0.5rem;
+  padding: 0.75rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto;
   font-weight: bold;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.1rem;
+  border-radius: 10px;
 }
 
 .button img {
   padding-right: 5px;
+}
+
+.description {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 1.2rem;
+}
+
+.description p {
+  margin: 0;
+}
+
+.description p:last-child {
+  margin-bottom: 30px;
 }
 </style>

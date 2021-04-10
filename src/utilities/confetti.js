@@ -3,7 +3,6 @@ import confetti from 'canvas-confetti';
 export const lunchConfetti = () => {
   const end = Date.now() + 10 * 1000;
 
-  // go Buckeyes!
   const colors = ['#34495e', '#41b883'];
 
   (function frame() {
