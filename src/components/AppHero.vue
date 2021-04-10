@@ -8,16 +8,13 @@
         Vue.js 3
       </a>
       <span>, </span>
-      <a
-        :class="$style['powered-link']"
-        href="https://www.netlify.com/?utm_source=github&utm_medium=peekavue-bh&utm_campaign=devex"
-      >
+      <a :class="$style['powered-link']" href="https://www.netlify.com/">
         Netlify
       </a>
       <span> & </span>
       <a
         :class="$style['powered-link']"
-        href="https://www.github.com/bencodezen/peek-a-vue"
+        href="https://github.com/TgMrP/Peek-a-Card"
       >
         GitHub
       </a>
