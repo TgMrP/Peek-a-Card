@@ -1,7 +1,7 @@
 <script>
-import _ from 'lodash';
-import { computed, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { createDeck } from './features/createDeck.js';
+import { createGame } from './features/createGame.js';
 import { lunchConfetti } from './utilities/confetti';
 import Card from './components/Card';
 import halloweenDeck from './data/halloweenDeck.json';
@@ -13,44 +13,15 @@ export default {
   },
   setup() {
     const { cardList } = createDeck(halloweenDeck);
+    const {
+      newPlayer,
+      startGame,
+      status,
+      restartGame,
+      remainingPairs,
+    } = createGame(cardList);
 
     const userSelection = ref([]);
-    const newPlayer = ref(true);
-
-    const startGame = () => {
-      newPlayer.value = false;
-
-      restartGame();
-    };
-
-    const status = computed(() => {
-      if (remainingPairs.value === 0) {
-        return 'Player wins!';
-      } else {
-        return `Remaining Pairs: ${remainingPairs.value}`;
-      }
-    });
-
-    const remainingPairs = computed(() => {
-      const remainingCards = cardList.value.filter(
-        (card) => card.matched === false
-      ).length;
-
-      return remainingCards / 2;
-    });
-
-    const restartGame = () => {
-      cardList.value = _.shuffle(cardList.value);
-
-      cardList.value = cardList.value.map((card, index) => {
-        return {
-          ...card,
-          matched: false,
-          visible: false,
-          position: index,
-        };
-      });
-    };
 
     const flipCard = (payload) => {
       cardList.value[payload.position].visible = true;
